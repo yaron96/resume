@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom"
+import { MainTemplate } from "shared/ui/mainTemplate";
 import { Main } from "widgets/main";
 import { User } from "widgets/user";
 
@@ -12,9 +13,9 @@ export const HomePage = () => {
   }, [params])
 
   return (
-    <div>
+    <MainTemplate>
       {query ? <User username={query}/> : <Main />}
-    </div>
+    </MainTemplate>
   )
 }
 
