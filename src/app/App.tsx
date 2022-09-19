@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { Routes } from "pages/routes";
+import "./global-styles.scss"
 import "antd/dist/antd.css";
-
 function App() {
   return (
     <div className="App">
