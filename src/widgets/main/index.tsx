@@ -1,16 +1,19 @@
-import { useState } from "react";
 import { FC } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Button, Input } from "antd";
+import Search from "antd/lib/input/Search";
+import { Divider } from "antd";
 import styles from "./styles.module.scss";
 
-export const Main: FC = ({}) => {
+interface IProps {
+  isLoading: boolean;
+  isError: boolean;
+}
+
+export const Main: FC<IProps> = ({ isLoading, isError }) => {
   const [, setParams] = useSearchParams();
 
-  const [value, setValue] = useState<string>("");
-
-  const handleSubmit = () => {
-    setParams(value);
+  const handleSubmit = (username: string) => {
+    setParams(username);
   };
 
   return (
@@ -24,12 +27,19 @@ export const Main: FC = ({}) => {
         work they have done.
       </p>
       <div className={styles["main__form"]}>
-        <Input value={value} onChange={(e) => setValue(e.target.value)}></Input>
-        <Button onClick={handleSubmit}>Generate</Button>
+        <Search
+          onSearch={handleSubmit}
+          enterButton={"Search"}
+          loading={isLoading}
+          status={isError ? "error" : ""}
+        />
       </div>
+      <Divider/>
       <h2>Notes, Information and Future features</h2>
       <footer>
-        <p>Created by @yaron96</p>
+        <p>Created by <a target="_blank" href={"https://github.com/yaron96"}>
+              @yaron96
+            </a></p>
       </footer>
     </div>
   );

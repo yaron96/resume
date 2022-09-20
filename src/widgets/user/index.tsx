@@ -1,61 +1,24 @@
-import { useState, useEffect, FC, useCallback, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { githubApi } from "shared/api/github";
-import { Button, Card, Spin } from "antd";
+import { IUser } from "entities/user/useSearchUser";
+import { Button, Card } from "antd";
 import Meta from "antd/lib/card/Meta";
 import styles from "./styles.module.scss";
 
 interface IProps {
-  username: string;
+  user: IUser;
 }
 
-export const User: FC<IProps> = ({ username }) => {
+export const User: FC<IProps> = ({ user }) => {
   const [, setParams] = useSearchParams();
 
-  const [user, setUser] = useState<any>({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await githubApi.getUser(username);
-      setUser(res.data);
-    } catch (e) {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
   const dateTransfer = useMemo(() => {
-    return user?.created_at?.slice(0, 10).split("-").join(".");
+    return user.created_at.slice(0, 10).split("-").join(".");
   }, [user]);
 
   const handleGoBack = () => {
     setParams("");
   };
-
-  if (isLoading) {
-    return (
-      <div className={styles["user"]}>
-        <Spin />
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className={styles["user"]}>
-        Error
-        <Button onClick={handleGoBack}>Go back</Button>
-      </div>
-    );
-  }
 
   return (
     <div className={styles["user"]}>

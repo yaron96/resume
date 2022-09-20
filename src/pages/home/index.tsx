@@ -1,23 +1,19 @@
-import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchUser } from "entities/user/useSearchUser";
 import { Main } from "widgets/main";
 import { User } from "widgets/user";
 import { MainTemplate } from "shared/ui/mainTemplate";
 
 export const HomePage = () => {
-  const [params] = useSearchParams();
-
-  const query = useMemo(() => {
-    const value = params.keys().next().value;
-    return value;
-  }, [params]);
-
-
+  const { user, isLoading, isError } = useSearchUser();
 
   return (
     <MainTemplate>
       <div>
-        {query ? <User username={query} /> : <Main />}
+        {user ? (
+          <User user={user} />
+        ) : (
+          <Main isLoading={isLoading} isError={isError} />
+        )}
       </div>
     </MainTemplate>
   );

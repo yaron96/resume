@@ -2,13 +2,14 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { githubApi } from "shared/api/github";
 
-interface IUser {
+export interface IUser {
   avatar_url: string;
   html_url: string;
   login: string;
   followers: number;
   following: number;
   public_repos: number;
+  created_at: string;
 }
 
 export const useSearchUser = () => {
@@ -21,6 +22,8 @@ export const useSearchUser = () => {
     const query = params.keys().next().value;
     if (query) {
       fetchUser(query);
+    } else {
+      setUser(null);
     }
   }, [params]);
 
