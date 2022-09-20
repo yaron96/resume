@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { IUser } from "entities/user/useSearchUser";
+import { IUser } from "shared/lib/types/user";
 import { Button, Card } from "antd";
 import Meta from "antd/lib/card/Meta";
 import styles from "./styles.module.scss";
