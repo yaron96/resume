@@ -1,27 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import { githubApi } from "shared/api/github";
-import { IUser } from "shared/lib/types/user";
+import { IRepo } from "shared/lib/types/repo";
 
-export const useSearchUser = (params: URLSearchParams) => {
-  const [user, setUser] = useState<IUser | null>(null);
+export const useSearchRepos = (params: URLSearchParams) => {
+  const [repos, setRepos] = useState<IRepo[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     const query = params.keys().next().value;
     if (query) {
-      fetchUser(query);
-    } else {
-      setUser(null);
+      fetchRepos(query);
     }
   }, [params]);
 
-  const fetchUser = async (username: string) => {
+  const fetchRepos = async (username: string) => {
     try {
       setIsError(false);
       setIsLoading(true);
-      const { data } = await githubApi.getUser(username);
-      setUser(data);
+      const { data } = await githubApi.getUserRepositories(username);
+      setRepos(data);
     } catch (e) {
       setIsError(true);
     } finally {
@@ -30,8 +28,8 @@ export const useSearchUser = (params: URLSearchParams) => {
   };
 
   return {
-    user,
+    repos,
     isLoading,
     isError,
-  };
-};
+  }
+}
