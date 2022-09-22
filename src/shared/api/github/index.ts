@@ -8,13 +8,25 @@ const getMe = async () => {
   return await octokit.request("GET /user", {});
 };
 
+const getMyRepositoreis = async () => {
+  return await octokit.request("GET /user/repos", {});
+};
+
 const getUser = async (username: string) => {
   return await octokit.request(`GET /users/${username}`, {
-    username
+    username,
+  });
+};
+
+const getUserRepositories = async (username: string) => {
+  return await octokit.request(`GET /users/${username}/repos`, {
+    username,
   });
 };
 
 export const githubApi = {
   getMe,
+  getMyRepositoreis,
   getUser,
+  getUserRepositories,
 };
