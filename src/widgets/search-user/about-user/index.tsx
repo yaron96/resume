@@ -9,7 +9,7 @@ interface IProps {
   user: IUser;
 }
 
-export const User: FC<IProps> = ({ user }) => {
+export const AboutUser: FC<IProps> = ({ user }) => {
   const [, setParams] = useSearchParams();
 
   const dateTransfer = useMemo(() => {
